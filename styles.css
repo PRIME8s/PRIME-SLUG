@@ -8,3 +8,25 @@ canvas {
   margin: 0 auto;
   background-color: #111;
 }
+#mobile-controls {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+.left-controls, .right-controls {
+  display: flex;
+  gap: 10px;
+}
+#mobile-controls button {
+  font-size: 24px;
+  padding: 15px 20px;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-weight: bold;
+  backdrop-filter: blur(5px);
+}

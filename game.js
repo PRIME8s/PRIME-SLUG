@@ -140,3 +140,33 @@ document.addEventListener('keyup', (e) => (keys[e.key] = false));
 
 loadLevel(currentLevel);
 gameLoop();
+
+function triggerKey(key, state) {
+  keys[key] = state;
+}
+
+function setupMobileControls() {
+  const controlMap = {
+    left: 'ArrowLeft',
+    right: 'ArrowRight',
+    jump: 'ArrowUp',
+    shoot: ' '
+  };
+
+  for (const id in controlMap) {
+    const btn = document.getElementById(id);
+    if (!btn) continue;
+
+    btn.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      triggerKey(controlMap[id], true);
+    });
+
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      triggerKey(controlMap[id], false);
+    });
+  }
+}
+
+setupMobileControls();
