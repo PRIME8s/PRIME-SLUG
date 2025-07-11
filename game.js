@@ -135,11 +135,8 @@ async function loadLevel(index) {
   cameraX = 0;
 }
 
-document.addEventListener('keydown', (e) => (keys[e.key] = true));
-document.addEventListener('keyup', (e) => (keys[e.key] = false));
-
-loadLevel(currentLevel);
-gameLoop();
+document.addEventListener('keydown', (e) => keys[e.key] = true);
+document.addEventListener('keyup', (e) => keys[e.key] = false);
 
 function triggerKey(key, state) {
   keys[key] = state;
@@ -153,20 +150,29 @@ function setupMobileControls() {
     shoot: ' '
   };
 
-  for (const id in controlMap) {
+  Object.entries(controlMap).forEach(([id, key]) => {
     const btn = document.getElementById(id);
-    if (!btn) continue;
+    if (!btn) return;
 
     btn.addEventListener('touchstart', (e) => {
       e.preventDefault();
-      triggerKey(controlMap[id], true);
+      triggerKey(key, true);
     });
 
     btn.addEventListener('touchend', (e) => {
       e.preventDefault();
-      triggerKey(controlMap[id], false);
+      triggerKey(key, false);
     });
-  }
+  });
 }
 
-setupMobileControls();
+function startGame() {
+  document.getElementById('intro-screen').style.display = 'none';
+  setupMobileControls();
+  loadLevel(currentLevel);
+  gameLoop();
+}
+
+window.onload = () => {
+  document.getElementById('start-button').addEventListener('click', startGame);
+};
